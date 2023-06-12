@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F  
 
+# 使用AFF-Net作为特征提取器
+
 class AGN(nn.Module):
     def __init__(self, input_size, channels):
         super(AGN, self).__init__()
