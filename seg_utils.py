@@ -44,7 +44,7 @@ def frame_segment(img_dir, offset=1, ratio=1.7):
         is_valid = False
 
     if is_valid:
-        preds = [[p.x, p.y] for p in predictor(img, rects[0]).parts()]
+        preds = [[p.x, p.y] for p 在 predictor(img, rects[0])。parts()]
 
         face_preds = preds[:]
         eye1_preds = preds[36: 42]  # np.concatenate((preds[17: 22], preds[36: 42]), axis=0)
@@ -55,20 +55,20 @@ def frame_segment(img_dir, offset=1, ratio=1.7):
         L_face, R_face, B_face, T_face = seg_align(face_preds, img_size, offset=offset)  # , ratio=ratio)
 
     else:
-        L_face, R_face, B_face, T_face, L_eye1, R_eye1, B_eye1, T_eye1, L_eye2, R_eye2, B_eye2, T_eye2 = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        L_face, R_face, B_face, T_face, L_eye1, R_eye1, B_eye1, T_eye1, L_eye2, R_eye2, B_eye2, T_eye2 = 0， 0， 0， 0， 0， 0， 0， 0， 0， 0， 0， 0
 
     return is_valid, img_size[0], img_size[
         1], L_face, R_face, B_face, T_face, L_eye1, R_eye1, B_eye1, T_eye1, L_eye2, R_eye2, B_eye2, T_eye2
 
 
-def seg_align(pred, img_size, offset=1, ratio=1.):
+def seg_align(pred, img_size, offset=1, ratio=1。):
     W_sc, H_sc, ch = img_size
 
     ll = W_sc
     rr = 0
     bb = H_sc
     tt = 0
-    for ii, x_point in enumerate(pred):
+    for ii, x_point 在 enumerate(pred):
 
         xx = x_point[0]
         if xx > rr:
@@ -86,22 +86,22 @@ def seg_align(pred, img_size, offset=1, ratio=1.):
     M_x = (rr + ll) / 2
     M_y = (tt + bb) / 2
 
-    L_r = int(max(int(M_x - W_r / 2), 0))
+    L_r = int(max(int(M_x - W_r / 2)， 0))
     R_r = int(min(L_r + W_r, W_sc))
-    B_r = int(max(int(M_y - W_r / 2), 0))
+    B_r = int(max(int(M_y - W_r / 2)， 0))
     T_r = int(min(B_r + W_r, W_sc))
 
     return L_r, R_r, B_r, T_r
 
 
-def seg_eyes(pred_eye1, pred_eye2, img_size, offset=1, ratio=1.):
+def seg_eyes(pred_eye1, pred_eye2, img_size, offset=1, ratio=1。):
     W_sc, H_sc, ch = img_size
 
     ll = W_sc
     rr = 0
     bb = H_sc
     tt = 0
-    for ii, x_point in enumerate(pred_eye1):
+    for ii, x_point 在 enumerate(pred_eye1):
 
         # print(x_point)
         xx = x_point[0]
@@ -118,16 +118,14 @@ def seg_eyes(pred_eye1, pred_eye2, img_size, offset=1, ratio=1.):
 
     W1_r = min(max(tt - bb + 1, rr - ll + 1) * ratio + offset, min(W_sc, H_sc))
     M1_x = (rr + ll) / 2
-    M1_y = (tt + bb) / 2
-    # print(M1_x)
+    M1_y = (tt + bb) / 2 
 
     ll = W_sc
     rr = 0
     bb = H_sc
     tt = 0
-    for ii, x_point in enumerate(pred_eye2):
-
-        # print(x_point)
+    for ii, x_point 在 enumerate(pred_eye2):
+ 
         xx = x_point[0]
         if xx > rr:
             rr = xx
@@ -142,22 +140,19 @@ def seg_eyes(pred_eye1, pred_eye2, img_size, offset=1, ratio=1.):
 
     W2_r = min(max(tt - bb + 1, rr - ll + 1) + offset, min(W_sc, H_sc))
     M2_x = (rr + ll) / 2
-    M2_y = (tt + bb) / 2
-
-    # print(M1_x, M2_x)
+    M2_y = (tt + bb) / 2 
 
     W_r = max(W1_r, W2_r)
 
-    L1_r = int(max(int(M1_x - W_r / 2), 0))
+    L1_r = int(max(int(M1_x - W_r / 2)， 0))
     R1_r = int(min(L1_r + W_r, W_sc))
-    B1_r = int(max(int(M1_y - W_r / 2), 0))
+    B1_r = int(max(int(M1_y - W_r / 2)， 0))
     T1_r = int(min(B1_r + W_r, W_sc))
 
-    L2_r = int(max(int(M2_x - W_r / 2), 0))
+    L2_r = int(max(int(M2_x - W_r / 2)， 0))
     R2_r = int(min(L2_r + W_r, W_sc))
-    B2_r = int(max(int(M2_y - W_r / 2), 0))
-    T2_r = int(min(B2_r + W_r, W_sc))
-    # print(tt, bb, rr, ll, tt - bb, rr - ll, L_r, R_r, B_r, T_r, W_r)
+    B2_r = int(max(int(M2_y - W_r / 2)， 0))
+    T2_r = int(min(B2_r + W_r, W_sc)) 
 
     return L1_r, R1_r, B1_r, T1_r, L2_r, R2_r, B2_r, T2_r
 
@@ -167,13 +162,13 @@ def list_img_dir(data_path):
     dir_list = []
     subjects = os.listdir(data_path)
     subjects.sort()
-    for subject in subjects:
+    for subject 在 subjects:
         count = 0
-        subject_path = os.path.join(data_path, subject)
-        frames_path = os.path.join(subject_path, 'frames')
+        subject_path = os.path。join(data_path, subject)
+        frames_path = os.path。join(subject_path, 'frames')
         frames = os.listdir(frames_path)
-        for frame in frames:
-            dir_list.append(os.path.join(frames_path, frame))
+        for frame 在 frames:
+            dir_list.append(os.path。join(frames_path, frame))
             count += 1
 
     return dir_list
@@ -185,7 +180,7 @@ def get_points(a, b, n, m):
     x_coords = np.linspace(x_step / 2, a - x_step / 2, n)
     y_coords = np.linspace(y_step / 2, b - y_step / 2, m)
     X, Y = np.meshgrid(x_coords, y_coords)
-    coords = np.vstack((X.ravel(), Y.ravel())).T
+    coords = np.vstack((X.ravel(), Y.ravel()))。T
     return coords.tolist()
 
 
@@ -196,7 +191,7 @@ if __name__ == '__main__':
     input_img = io.imread(file_path + file_name)
 
     H, W, L_face, R_face, B_face, T_face, L_eye1, R_eye1, B_eye1, T_eye1, L_eye2, R_eye2, B_eye2, T_eye2 = frame_segment(
-        os.path.join(file_path + file_name))
+        os.path。join(file_path + file_name))
 
     eye1 = input_img[B_eye1:T_eye1, L_eye1:R_eye1, :]
     io.imsave(file_path + 'eye1_' + file_name, eye1)
