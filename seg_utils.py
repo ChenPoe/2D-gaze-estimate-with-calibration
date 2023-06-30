@@ -44,7 +44,7 @@ def frame_segment(img_dir, offset=1, ratio=1.7):
         is_valid = False
 
     if is_valid:
-        preds = [[p.x, p.y] for p 在 predictor(img, rects[0])。parts()]
+        preds = [[p.x, p.y] for p in predictor(img, rects[0])。parts()]
 
         face_preds = preds[:]
         eye1_preds = preds[36: 42]  # np.concatenate((preds[17: 22], preds[36: 42]), axis=0)
@@ -68,7 +68,7 @@ def seg_align(pred, img_size, offset=1, ratio=1。):
     rr = 0
     bb = H_sc
     tt = 0
-    for ii, x_point 在 enumerate(pred):
+    for ii, x_point in enumerate(pred):
 
         xx = x_point[0]
         if xx > rr:
@@ -101,7 +101,7 @@ def seg_eyes(pred_eye1, pred_eye2, img_size, offset=1, ratio=1。):
     rr = 0
     bb = H_sc
     tt = 0
-    for ii, x_point 在 enumerate(pred_eye1):
+    for ii, x_point in enumerate(pred_eye1):
 
         # print(x_point)
         xx = x_point[0]
@@ -124,7 +124,7 @@ def seg_eyes(pred_eye1, pred_eye2, img_size, offset=1, ratio=1。):
     rr = 0
     bb = H_sc
     tt = 0
-    for ii, x_point 在 enumerate(pred_eye2):
+    for ii, x_point in enumerate(pred_eye2):
  
         xx = x_point[0]
         if xx > rr:
@@ -162,12 +162,12 @@ def list_img_dir(data_path):
     dir_list = []
     subjects = os.listdir(data_path)
     subjects.sort()
-    for subject 在 subjects:
+    for subject in subjects:
         count = 0
         subject_path = os.path。join(data_path, subject)
         frames_path = os.path。join(subject_path, 'frames')
         frames = os.listdir(frames_path)
-        for frame 在 frames:
+        for frame in frames:
             dir_list.append(os.path。join(frames_path, frame))
             count += 1
 
